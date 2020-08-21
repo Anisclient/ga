@@ -1,65 +1,42 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+// import { graphql } from 'gatsby';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
-// This query is executed at build time by Gatsby.
-export const GatsbyQuery = graphql`
+const MY_QUERY = gql`
   {
-    rickAndMorty {
-      character(id: 1) {
-        name
-        image
-      }
+    car_model(order_by: { id: asc }, limit: 2) {
+      model_description
+      model_name
+      id
     }
   }
 `;
 
-// This query is executed at run time by Apollo.
-const APOLLO_QUERY = gql`
-  {
-    meme(where: { id: "cjke2xlf9nhd90953khilyzja" }) {
-      photo {
-        url(
-          transformation: {
-            image: { resize: { width: 600, height: 600, fit: crop } }
-          }
-        )
-      }
-    }
-  }
-`;
-
-export default ({
-  data: {
-    rickAndMorty: { character },
-  },
-}) => {
-  const { loading, error, data } = useQuery(APOLLO_QUERY);
+export default () => {
+  const { loading, error, data } = useQuery(MY_QUERY);
+  console.log(data);
 
   return (
-    <div style={{ textAlign: 'center', width: '600px', margin: '50px auto' }}>
-      <h1>{character.name} With His Friend Sara</h1>
-      <p>
-        Rick & Morty API data loads at build time. Sara Vieira’s meme API loads
-        at runtime.
-      </p>
-      <div>
-        <img
-          src={character.image}
-          alt={character.name}
-          style={{ width: 300 }}
-        />
-
-        {loading && <p>Loading Sara...</p>}
+    <div>
+      <h1 style={{ textAlign: 'center', margin: '50px auto' }}>XxX</h1>
+      <div
+        style={{
+          textAlign: 'center',
+          width: '600px',
+          margin: '50px auto',
+          backgroundColor: '#ddd',
+          padding: '20px',
+        }}
+      >
+        {loading && <p>Loading...</p>}
         {error && <p>Error: ${error.message}</p>}
-        {data && data.meme && data.meme.photo && (
-          <img
-            src={data.meme.photo.url}
-            alt="Sara Vieira"
-            style={{ maxWidth: 300 }}
-          />
-        )}
+        {data.car_model.map(car => (
+          <div key={car.id}>
+            <h2>{car.model_name}</h2>
+            <p>{car.model_description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
