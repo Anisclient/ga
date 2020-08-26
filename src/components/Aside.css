@@ -1,0 +1,18 @@
+.aside {
+  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.aside__item {
+  padding: 5px;
+  text-decoration: none;
+  color: #000;
+}
+
+.aside__item:hover {
+  background-color: lightgray;
+  cursor: pointer;
+  font-weight: bold;
+}
