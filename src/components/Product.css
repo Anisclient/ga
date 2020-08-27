@@ -11,11 +11,14 @@
   max-width: 500px;
   background-color: white;
   z-index: 1;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .product__info {
   height: 140px;
   margin-bottom: 25px;
+  color: #000;
 }
 
 .product__price {
@@ -38,4 +41,30 @@
   background-color: #f0c14b;
   border: 1px solid;
   border-color: #a88734 #9c7e31 #846a29;
+}
+
+.product.oneProductInPage {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  min-width: none;
+  max-width: none;
+  background-color: white;
+  z-index: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.product.oneProductInPage > img {
+  max-height: 195px;
+  width: 195px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  margin-right: 15px;
 }

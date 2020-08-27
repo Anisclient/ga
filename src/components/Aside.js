@@ -2,12 +2,11 @@ import React from 'react';
 import './Aside.css';
 import { Link } from 'gatsby';
 
-function Aside({ id, section, fetchSpecificSection }) {
+function Aside({ section }) {
   return (
     <aside className="aside">
       <Link
-        to="/"
-        onClick={() => fetchSpecificSection({ variables: { fromxxx_id: id } })}
+        to={section === 'allproducts' ? `/` : `/${section}`}
         className="aside__item"
       >
         {section}

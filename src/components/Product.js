@@ -1,26 +1,21 @@
 import React from 'react';
 import './Product.css';
-// import { useStateValue } from './StateProvider'
+import { Link } from 'gatsby';
 
-function Product({ title, price, rating, image }) {
-  // const [{ basket }, dispatch] = useStateValue()
-
-  // const addToBasket = () => {
-  //   //add item to basket
-  //   dispatch({
-  //     type: 'ADD_TO_BASKET',
-  //     item: {
-  //       id,
-  //       title,
-  //       image,
-  //       price,
-  //       rating,
-  //     },
-  //   })
-  // }
-
+function Product({
+  sections_id,
+  title,
+  price,
+  rating,
+  image,
+  id,
+  oneProductInPage,
+}) {
   return (
-    <div className="product">
+    <Link
+      to={`/${sections_id}/${id}`}
+      className={`product ${oneProductInPage ? 'oneProductInPage' : ''}`}
+    >
       <div className="product__info">
         <p>{title}</p>
         <p className="product__price">
@@ -38,8 +33,7 @@ function Product({ title, price, rating, image }) {
         </div>
       </div>
       <img src={image} alt="product-bg" />
-      <button>Add to basket</button>
-    </div>
+    </Link>
   );
 }
 
