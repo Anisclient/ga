@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Layout from '../components/layout';
 import Product from '../components/Product';
@@ -17,6 +17,8 @@ const QUERY_FROM_XXXPRODUCTS = gql`
 `;
 
 export default function TempPage({ pageContext }) {
+  const [state, setState] = useState(null);
+
   const { page, all, headerText } = pageContext;
 
   const {
@@ -25,14 +27,21 @@ export default function TempPage({ pageContext }) {
     data: dataQueryFromxxxProducts,
   } = useQuery(QUERY_FROM_XXXPRODUCTS, { variables: { sectionId: page.id } });
 
+  useEffect(() => {
+    if (dataQueryFromxxxProducts) {
+      setState(dataQueryFromxxxProducts.xxxProducts);
+    }
+  }, [dataQueryFromxxxProducts]);
+  console.log('state: ', state);
+
   return (
     <Layout all={all} headerText={headerText}>
       {loadingQueryFromxxxProducts && <p>Loading Specmain...</p>}
       {errorQueryFromxxxProducts && (
         <p>Error: ${errorQueryFromxxxProducts.message}</p>
       )}
-      {dataQueryFromxxxProducts &&
-        dataQueryFromxxxProducts.xxxProducts.map(product => (
+      {state &&
+        state.map(product => (
           <Product
             sections_id={product.sections_id}
             key={product.id}
