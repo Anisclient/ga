@@ -19,6 +19,7 @@
   height: 140px;
   margin-bottom: 25px;
   color: #000;
+  width: 100%;
 }
 
 .product__price {
