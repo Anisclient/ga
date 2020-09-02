@@ -5,7 +5,7 @@ import Product from '../components/Product';
 
 const QUERY_ONE_PRODUCT = gql`
   query($productId: Int!) {
-    xxxProducts(where: { id: { _eq: $productId } }) {
+    Product: xxxProducts(where: { id: { _eq: $productId } }) {
       id
       sections_id
       title
@@ -17,7 +17,7 @@ const QUERY_ONE_PRODUCT = gql`
 `;
 
 export default function TempProduct({ pageContext }) {
-  const { product, all, headerText } = pageContext;
+  const { product } = pageContext;
 
   const {
     loading: loadingProduct,
@@ -26,11 +26,11 @@ export default function TempProduct({ pageContext }) {
   } = useQuery(QUERY_ONE_PRODUCT, { variables: { productId: product.id } });
 
   return (
-    <Layout all={all} headerText={headerText}>
-      {loadingProduct && <p>Loading Specmain...</p>}
+    <Layout>
+      {loadingProduct && <p>Loading Product...</p>}
       {errorProduct && <p>Error: ${errorProduct.message}</p>}
       {dataProduct &&
-        dataProduct.xxxProducts.map(product => (
+        dataProduct.Product.map(product => (
           <Product
             sections_id={product.sections_id}
             key={product.id}

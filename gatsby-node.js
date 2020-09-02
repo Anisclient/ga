@@ -5,11 +5,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const queryResultsPage = await graphql(`
     {
-      xxxSections {
+      Sections: xxxSections {
         id
         section
       }
-      xxxProducts {
+      Products: xxxProducts {
         image
         id
         price
@@ -23,25 +23,25 @@ exports.createPages = async ({ graphql, actions }) => {
   const pageTemplate = path.resolve(`src/templates/temp-page.js`);
   const templateProduct = path.resolve(`src/templates/temp-product.js`);
 
-  queryResultsPage.data.xxxSections.forEach(page => {
+  queryResultsPage.data.Sections.forEach(page => {
     createPage({
       path: `/${page.section}`,
       component: pageTemplate,
       context: {
         page,
-        all: 'all',
-        headerText: `${page.section}`,
+        // all: 'all',
+        // headerText: `${page.section}`,
       },
     });
   });
 
-  queryResultsPage.data.xxxProducts.forEach(product => {
+  queryResultsPage.data.Products.forEach(product => {
     createPage({
       path: `/${product.sections_id}/${product.id}`,
       component: templateProduct,
       context: {
         product,
-        all: 'all',
+        // all: 'all',
       },
     });
   });

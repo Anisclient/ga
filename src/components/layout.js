@@ -4,10 +4,10 @@ import Aside from '../components/Aside';
 import './layout.css';
 import { useStaticQuery, graphql } from 'gatsby';
 
-export default function Layout({ children, all, headerText }) {
+export default function Layout({ children }) {
   const QUERY_SECTIONS = graphql`
     {
-      xxxSections {
+      Sections: xxxSections {
         id
         section
       }
@@ -18,14 +18,13 @@ export default function Layout({ children, all, headerText }) {
 
   return (
     <div className="wrapper">
-      <Header headerText={headerText} />
+      <Header />
       <div className="main">
         <div className="main__aside">
           {dataOfSection &&
-            dataOfSection.xxxSections.map(s => (
+            dataOfSection.Sections.map(s => (
               <Aside section={s.section} key={s.id} id={s.id} />
             ))}
-          {all && <Aside section="allproducts" />}
         </div>
         <div className="main__products">{children}</div>
       </div>
