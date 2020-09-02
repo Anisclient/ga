@@ -3,9 +3,9 @@ import { useQuery, gql } from '@apollo/client';
 import Layout from '../components/layout';
 import Product from '../components/Product';
 
-const QUERY_FROM_XXXPRODUCTS = gql`
+const QUERY_PRODUCTS = gql`
   query($sectionId: Int!) {
-    xxxProducts(where: { sections_id: { _eq: $sectionId } }) {
+    Products: xxxProducts(where: { sections_id: { _eq: $sectionId } }) {
       id
       image
       price
@@ -16,29 +16,31 @@ const QUERY_FROM_XXXPRODUCTS = gql`
   }
 `;
 
-export default function TempPage({ pageContext }) {
-  const [state, setState] = useState(null);
+export default function TempPage({ data, pageContext }) {
+  console.log('data: ', data);
+  const [state, setState] = useState([]);
 
-  const { page, all, headerText } = pageContext;
+  const { page } = pageContext;
 
   const {
-    loading: loadingQueryFromxxxProducts,
-    error: errorQueryFromxxxProducts,
-    data: dataQueryFromxxxProducts,
-  } = useQuery(QUERY_FROM_XXXPRODUCTS, { variables: { sectionId: page.id } });
+    loading: loadingSpecificTypeOfProducts,
+    error: errorSpecificTypeOfProducts,
+    data: dataSpecificTypeOfProducts,
+  } = useQuery(QUERY_PRODUCTS, { variables: { sectionId: page.id } });
 
   useEffect(() => {
-    if (dataQueryFromxxxProducts) {
-      setState(dataQueryFromxxxProducts.xxxProducts);
+    if (!loadingSpecificTypeOfProducts) {
+      setState(dataSpecificTypeOfProducts.Products);
     }
-  }, [dataQueryFromxxxProducts]);
+  }, [loadingSpecificTypeOfProducts]);
   console.log('state: ', state);
+  console.log('loadingSpecificTypeOfProducts: ', loadingSpecificTypeOfProducts);
 
   return (
-    <Layout all={all} headerText={headerText}>
-      {loadingQueryFromxxxProducts && <p>Loading Specmain...</p>}
-      {errorQueryFromxxxProducts && (
-        <p>Error: ${errorQueryFromxxxProducts.message}</p>
+    <Layout>
+      {loadingSpecificTypeOfProducts && <p>Loading Specmain...</p>}
+      {errorSpecificTypeOfProducts && (
+        <p>Error: ${errorSpecificTypeOfProducts.message}</p>
       )}
       {state &&
         state.map(product => (

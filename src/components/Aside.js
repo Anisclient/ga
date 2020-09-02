@@ -5,10 +5,7 @@ import { Link } from 'gatsby';
 function Aside({ section }) {
   return (
     <aside className="aside">
-      <Link
-        to={section === 'allproducts' ? `/` : `/${section}`}
-        className="aside__item"
-      >
+      <Link to={`/${section}`} className="aside__item">
         {section}
       </Link>
     </aside>
